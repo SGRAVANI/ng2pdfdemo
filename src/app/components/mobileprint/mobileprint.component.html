@@ -8,7 +8,6 @@
     <ng2-pdfjs-viewer
     viewerId="pdfViewer"
     [pdfSrc]="pdfSrc1"  [externalWindow]="false"
-    [externalWindow]="isMobile()"
     style="display: block; width: 100%; height: 100vh;">
 
   </ng2-pdfjs-viewer>
@@ -21,7 +20,7 @@
     [pdfSrc]="pdfSrc2"
     viewerId="myPdfViewer"
     [download]="true"
-    [externalWindow]="isMobile()"
+    
     [downloadFileName]="'GeneratedBlobPDF.pdf'"
     [startDownload]="true"
     style="display: block; width: 100%; height: 100vh;"
