@@ -1,0 +1,15 @@
+<button (click)="loadPdfFromBlob()">Generate Blob Pdf</button>
+<div style="width: 800px; height: 600px;" *ngIf="showPdf">
+  <ng2-pdfjs-viewer
+    #pdfViewer
+    [pdfSrc]="pdfSrc"
+    viewerId="myPdfViewer"
+
+    [externalWindow]="false"
+    [openFile]="false"
+    [download]="false"
+    [viewBookmark]="false"
+    [downloadFileName]="'BlobPDF.pdf'"
+    >
+  </ng2-pdfjs-viewer>
+</div>

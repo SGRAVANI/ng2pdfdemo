@@ -1,0 +1,27 @@
+ <div class="btn-container">
+ <button (click)="previewPdf1()" class="btn-primary">Preview Static PDF</button>
+ <button *ngIf="isMobile() && showPdf2" class="btn-warning" (click)="downloadPdfMobile()">Download PDF</button>
+ <button (click)="loadPdfFromBlob()" class="btn-success">Preview Blob Pdf</button>
+</div>
+
+  <div *ngIf="showPdf" style="margin-top: 20px;">
+    <ng2-pdfjs-viewer
+    viewerId="pdfViewer"
+    [pdfSrc]="pdfSrc1"  [externalWindow]="false"
+    style="display: block; width: 100%; height: 100vh;">
+  </ng2-pdfjs-viewer>
+
+</div>
+<div  *ngIf="showPdf2" [style.display]="showPdf2 ? 'block' : 'none'">
+
+  <ng2-pdfjs-viewer
+  #pdfViewer
+    [pdfSrc]="pdfSrc2"
+    viewerId="myPdfViewer"
+    [download]="true"
+    [downloadFileName]="'GeneratedBlobPDF.pdf'"
+    [startDownload]="true"
+    style="display: block; width: 100%; height: 100vh;"
+    >
+  </ng2-pdfjs-viewer>
+</div>
