@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print PDF</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="pdf-frame" width="100%" height="100%" style="border: none;"></iframe>
+
+    <script>
+        // Extract 'file' query parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const file = urlParams.get('file');
+
+        if (file) {
+            // Decode the file path
+            const fileUrl = decodeURIComponent(file);
+            console.log('Loading PDF from:', fileUrl); // Debugging step
+
+            const pdfFrame = document.getElementById('pdf-frame');
+
+            // Set the iframe source to the PDF viewer (web/viewer.html)
+            pdfFrame.src = `assets/pdfjs/web/viewer.html?file=${fileUrl}`;
+
+            // Wait for the PDF viewer to load and trigger the print dialog
+            pdfFrame.onload = function() {
+                console.log('PDF viewer loaded, triggering print dialog...');
+                setTimeout(function() {
+                    try {
+                        // Trigger the print dialog for the PDF viewer content
+                        pdfFrame.contentWindow.print();
+                    } catch (e) {
+                        console.error('Error triggering print:', e);
+                        alert('Unable to open print dialog.');
+                    }
+                }, 1000); // Delay for 1 second to ensure content is loaded
+            };
+        } else {
+            console.error('No file parameter found!');
+            alert('PDF file path is missing.');
+        }
+    </script>
+</body>
+</html>

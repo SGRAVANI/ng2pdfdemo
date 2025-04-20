@@ -3,11 +3,14 @@
  <button *ngIf="isMobile() && showPdf2" class="btn-warning" (click)="downloadPdfMobile()">Download PDF</button>
  <button (click)="loadPdfFromBlob()" class="btn-success">Preview Blob Pdf</button>
 </div>
-
+<!-- [print]="isMobile()?false:true" -->
   <div *ngIf="showPdf" style="margin-top: 20px;">
-    <ng2-pdfjs-viewer
+    <ng2-pdfjs-viewer #pdfViewer1
     viewerId="pdfViewer"
-    [pdfSrc]="pdfSrc1"  [externalWindow]="false"
+    [pdfSrc]="pdfSrc1"
+    (onDocumentLoad)="onPdfViewerLoaded($event)"
+    useBrowserLocale="true"
+   
     style="display: block; width: 100%; height: 100vh;">
 
   </ng2-pdfjs-viewer>
@@ -20,7 +23,8 @@
     [pdfSrc]="pdfSrc2"
     viewerId="myPdfViewer"
     [download]="true"
-    
+
+
     [downloadFileName]="'GeneratedBlobPDF.pdf'"
     [startDownload]="true"
     style="display: block; width: 100%; height: 100vh;"
