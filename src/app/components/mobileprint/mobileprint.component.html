@@ -2,7 +2,7 @@
  <button (click)="previewPdf1()" class="btn-primary">Preview Static PDF</button>
  <button *ngIf="isMobile() && showPdf2" class="btn-warning" (click)="downloadPdfMobile()">Download PDF</button>
  <button (click)="loadPdfFromBlob()" class="btn-success">Preview Blob Pdf</button>
-<button (click)="navigatetoExtended()">print using extended ngx</button>
+<button class="btn-warning" (click)="navigatetoExtended()">print using extended ngx</button>
 </div>
 <!-- [print]="isMobile()?false:true" -->
   <div *ngIf="showPdf" style="margin-top: 20px;">
