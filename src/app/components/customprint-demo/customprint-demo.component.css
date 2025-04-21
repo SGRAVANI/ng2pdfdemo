@@ -1,0 +1,16 @@
+.pdf-container {
+  height: 100vh; /* or use 90vh if you want some space for button */
+  width: 100%;
+}
+
+ng2-pdfjs-viewer {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+ng2-pdfjs-viewer iframe {
+  height: 100% !important;
+  width: 100%;
+  border: none;
+}

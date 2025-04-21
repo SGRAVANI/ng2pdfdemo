@@ -21,89 +21,15 @@ export class MobileprintComponent implements AfterViewInit  {
   // pdfBase64 = 'JVBERi0xLjUKJcTl8uXrp/Og0MTGCjEgMCBvYmoKPDwgL1BhZ2VzIDIgMCBSID4+CmVuZG9iagoKMiAwIG9iago8PCAvQ291bnQgMSAvS2lkcyBbMyAwIFJdID4+CmVuZG9iagoKMyAwIG9iago8PCAvUGFyZW50IDIgMCBSIC9SZXNvdXJjZXMgPDwgPj4gL1R5cGUgL1BhZ2UgL01lZGlhQm94IFswIDAgNjEyIDc5Ml0gL0NvbnRlbnRzIDQgMCBSID4+CmVuZG9iagoKNCAwIG9iago8PCAvTGVuZ3RoIDQyID4+CnN0cmVhbQpCBi9GMQoxMDAgNzAwIFRECi9Gb28gQmFyIQplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA1CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA5NSAwMDAwMCBuIAowMDAwMDAwMTUzIDAwMDAwIG4gCjAwMDAwMDAyNDYgMDAwMDAgbiAKMDAwMDAwMDM1MCAwMDAwMCBuIAp0cmFpbGVyCjw8IC9Sb290IDEgMCBSIC9JRCBbIDxDQ0Y0QzU1NjhDOTk2NkQ5NDAwMDAwMDAwMDAwMDA+IDxDQ0Y0QzU1NjhDOTk2NkQ5NDAwMDAwMDAwMDAwMDA+IF0gPj4Kc3RhcnR4cmVmCjQ2NQolJUVPRgo='
   constructor(private renderer: Renderer2, private ngZone: NgZone) {}
   ngAfterViewInit(): void {
-    // const interval = setInterval(() => {
-    //   const iframe: HTMLIFrameElement | null = document.querySelector('iframe#myPdfViewer');
 
-    //   if (iframe && iframe.contentDocument) {
-    //     clearInterval(interval);
-    //     this.observeSecondaryPrintButton(iframe);
-    //   }
-    // }, 500);
   }
-
-  observeSecondaryPrintButton(iframe: HTMLIFrameElement): void {
-  const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
-
-  if (!iframeDoc) return;
-
-  const observer = new MutationObserver(() => {
-    const printBtn = iframeDoc.getElementById('#secondaryPrint') as HTMLElement;
-
-    if (printBtn && !printBtn.onclick) {
-      console.log('🎯 (Observer) secondaryPrint button found!');
-      printBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        alert("print button clicked from observer"); // ✅ mobile check
-        this.customPrintHandler();
-      });
-
-      observer.disconnect();
-    }
-  });
-
-  observer.observe(iframeDoc.body, {
-    childList: true,
-    subtree: true,
-  });
-}
 
    // Handle print functionality
    customPrintHandler(): void {
 
-    // const iframe = document.querySelector('iframe[title="ng2-pdfjs-viewer"]') as HTMLIFrameElement;
+    // const iframe = document.querySelector('iframe[title="ng
+      const iframe = document.querySelector('iframe[title="ng2-pdfjs-viewer"]') as HTMLIFrameElement;
 
-    // if (this.isMobile()) {
-    //   if (iframe && iframe.src) {
-    //     const viewerUrl = iframe.src;
-    //     const urlParams = new URLSearchParams(viewerUrl.split('?')[1]);
-    //     const fileParam = urlParams.get('file');
-
-    //     if (!fileParam) {
-    //       alert('Unable to extract PDF file path.');
-    //       return;
-    //     }
-
-    //     const pdfPath = `assets/pdfjs/web/${fileParam}`;
-    //     const newWindow = window.open(pdfPath, '_blank');
-
-    //     if (newWindow) {
-    //       const checkLoaded = setInterval(() => {
-    //         try {
-    //           if (newWindow.document.readyState === 'complete') {
-    //             clearInterval(checkLoaded);
-    //             newWindow.print();
-    //           }
-    //         } catch (e) {
-    //           // Cross-origin error until ready
-    //         }
-    //       }, 500);
-    //     } else {
-    //       alert('Popup blocked. Please allow pop-ups for this site.');
-    //     }
-    //   } else {
-    //     alert('Unable to access the PDF for printing on mobile.');
-    //   }
-    // } else {
-    //   if (iframe?.contentWindow) {
-    //     iframe.contentWindow.focus();
-    //     iframe.contentWindow.print();
-    //   }
-    // }
-
-    const iframe = document.querySelector('iframe[title="ng2-pdfjs-viewer"]') as HTMLIFrameElement;
-
-    if (this.isMobile()) {
       if (iframe && iframe.src) {
         const viewerUrl = iframe.src;
         const urlParams = new URLSearchParams(viewerUrl.split('?')[1]);
@@ -114,24 +40,30 @@ export class MobileprintComponent implements AfterViewInit  {
           return;
         }
 
-        const encodedFile = encodeURIComponent(fileParam);
-        // Open the custom print viewer page (print-viewer.html)
-        const printPageUrl = `assets/pdfjs/print-viewer.html?file=${encodedFile}`;
+        const pdfPath = `assets/pdfjs/web/${fileParam}`;
+        const newWindow = window.open(pdfPath, '_blank');
+        if (newWindow) {
+          setTimeout(() => {
+            console.log('Triggering print');
+            newWindow.alert("triggering print")
+            newWindow.focus();
+            newWindow.print();
 
-        const newWindow = window.open(printPageUrl, '_blank');
-        if (!newWindow) {
+          }, 500);
+        } else {
+          console.log('Popup blocked!');
           alert('Popup blocked. Please allow pop-ups for this site.');
         }
+
       } else {
         alert('Unable to access the PDF for printing on mobile.');
       }
-    } else {
-      if (iframe?.contentWindow) {
-        iframe.contentWindow.focus();
-        iframe.contentWindow.print();
-      }
     }
-       }
+
+
+
+
+
 
 
 
@@ -142,26 +74,42 @@ export class MobileprintComponent implements AfterViewInit  {
 
 
      previewPdf1() {
-     this.showPdf = true;
-     this.showPdf2=false;
-     setTimeout(() => {
-      if (this.showPdf) {
-        console.log("reached here");
-        const iframe = document.querySelector('iframe');
-const printButton  = iframe?.contentDocument?.getElementById('secondaryPrint');
-        //const printButton = document.getElementById('print');
-        console.log(printButton)
-        if (printButton && this.isMobile()) {
-          console.log("print button found");
-          printButton.addEventListener('click', (e) => {
-            alert("print button clicked");
-            e.preventDefault();
-            e.stopPropagation();
-            this.customPrintHandler();
-          });
-        }
-      }
-    }, 100); // or
+
+this.showPdf = true;
+  this.showPdf2 = false;
+if(this.isMobile())
+{
+   const intervalId = setInterval(() => {
+     const iframe = document.querySelector('iframe');
+    const printButton = iframe?.contentDocument?.getElementById('secondaryPrint');
+
+    if (iframe && printButton && this.isMobile()) {
+      console.log("Print button found");
+
+      // Clone and replace to remove ALL previous event listeners
+      const clone = printButton.cloneNode(true) as HTMLElement;
+      printButton.replaceWith(clone);
+
+      // Attach custom logic at the CAPTURE phase
+      clone.addEventListener(
+        'click',
+        (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          alert("✅ Custom print logic executed only!");
+          this.customPrintHandler();
+        },
+        true // <-- capture phase, so we intercept BEFORE PDF viewer
+      );
+
+      clearInterval(intervalId);
+    }
+  }, 300);
+
+  // Optional safety timeout
+  setTimeout(() => clearInterval(intervalId), 5000);
+}
     }
     isMobile(): boolean {
       const userAgent = navigator.userAgent || navigator.vendor;
