@@ -1,5 +1,6 @@
 
 import { Component, AfterViewInit ,ViewChild, NgZone, Renderer2} from '@angular/core';
+import { Router } from '@angular/router';
 import { jsPDF } from 'jspdf';
 import { PdfJsViewerComponent } from 'ng2-pdfjs-viewer';
 
@@ -19,7 +20,7 @@ export class MobileprintComponent implements AfterViewInit  {
   @ViewChild('pdfViewer', { static: false }) pdfViewer!: PdfJsViewerComponent;
   // Add this property
   // pdfBase64 = 'JVBERi0xLjUKJcTl8uXrp/Og0MTGCjEgMCBvYmoKPDwgL1BhZ2VzIDIgMCBSID4+CmVuZG9iagoKMiAwIG9iago8PCAvQ291bnQgMSAvS2lkcyBbMyAwIFJdID4+CmVuZG9iagoKMyAwIG9iago8PCAvUGFyZW50IDIgMCBSIC9SZXNvdXJjZXMgPDwgPj4gL1R5cGUgL1BhZ2UgL01lZGlhQm94IFswIDAgNjEyIDc5Ml0gL0NvbnRlbnRzIDQgMCBSID4+CmVuZG9iagoKNCAwIG9iago8PCAvTGVuZ3RoIDQyID4+CnN0cmVhbQpCBi9GMQoxMDAgNzAwIFRECi9Gb28gQmFyIQplbmRzdHJlYW0KZW5kb2JqCnhyZWYKMCA1CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwMDA5NSAwMDAwMCBuIAowMDAwMDAwMTUzIDAwMDAwIG4gCjAwMDAwMDAyNDYgMDAwMDAgbiAKMDAwMDAwMDM1MCAwMDAwMCBuIAp0cmFpbGVyCjw8IC9Sb290IDEgMCBSIC9JRCBbIDxDQ0Y0QzU1NjhDOTk2NkQ5NDAwMDAwMDAwMDAwMDA+IDxDQ0Y0QzU1NjhDOTk2NkQ5NDAwMDAwMDAwMDAwMDA+IF0gPj4Kc3RhcnR4cmVmCjQ2NQolJUVPRgo='
-  constructor(private renderer: Renderer2, private ngZone: NgZone) {}
+  constructor(private renderer: Renderer2, private ngZone: NgZone,private router:Router) {}
   ngAfterViewInit(): void {
 
   }
@@ -64,7 +65,10 @@ export class MobileprintComponent implements AfterViewInit  {
 
 
 
-
+    navigatetoExtended()
+    {
+    this.router.navigate(['/extended'])
+    }
 
 
   onPdfViewerLoaded(pagesCount: number): void {
